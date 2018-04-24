@@ -1,7 +1,6 @@
 import unittest
 
-from mycryptopals.base64 import bytes_to_base64
-from mycryptopals.utils import hex_to_bytes, xor, bytes_to_hex
+from mycryptopals.utils import *
 
 
 class TestSet11(unittest.TestCase):
