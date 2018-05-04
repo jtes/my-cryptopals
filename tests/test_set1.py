@@ -1,6 +1,7 @@
 import unittest
 
 from mycryptopals.utils import *
+from mycryptopals.xor_decrypt import crack_single_byte_xor
 
 
 class TestSet11(unittest.TestCase):
@@ -17,6 +18,14 @@ class TestSet11(unittest.TestCase):
         hex2 = "686974207468652062756c6c277320657965"
         result = bytes_to_hex(xor(hex_to_bytes(hex1), hex_to_bytes(hex2)))
         self.assertEqual(result, "746865206b696420646f6e277420706c6179")
+
+    def test_set1_3(self):
+        """Set 1 / Challenge 3 - Single-byte XOR cipher"""
+        hex_encrypted = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
+        bytes_encrypted = hex_to_bytes(hex_encrypted)
+        key_byte = crack_single_byte_xor(bytes_encrypted)
+        bytes_decrypted = single_byte_xor(bytes_encrypted, key_byte)
+        self.assertEqual(bytes_decrypted.decode(), "Cooking MC's like a pound of bacon");
 
 
 if __name__ == '__main__':

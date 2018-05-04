@@ -7,6 +7,11 @@ utility functions
 
 __hextable = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
 
+__b64table = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'
+              , 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f'
+              , 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v'
+              , 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/')
+
 
 def bytes_to_hex(bytes):
     """convert bytearray to hex-string"""
@@ -32,16 +37,15 @@ def hex_to_bytes(hex_string):
 def xor(bytes1, bytes2):
     if len(bytes1) != len(bytes2):
         raise RuntimeError
-    result = []
+    result = bytearray()
     for i in range(0, len(bytes1)):
         result.append(bytes1[i] ^ bytes2[i])
     return result
 
 
-__b64table = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'
-              , 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f'
-              , 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v'
-              , 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/')
+def single_byte_xor(bytes, key_byte):
+    """XOR every byte in 'bytes' with the 'key_byte'"""
+    return xor(bytes, [key_byte] * len(bytes))
 
 
 def bytes_to_base64(bytes):
