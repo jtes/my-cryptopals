@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from mycryptopals.utils import *
@@ -23,9 +24,34 @@ class TestSet11(unittest.TestCase):
         """Set 1 / Challenge 3 - Single-byte XOR cipher"""
         hex_encrypted = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
         bytes_encrypted = hex_to_bytes(hex_encrypted)
-        key_byte = crack_single_byte_xor(bytes_encrypted)
-        bytes_decrypted = single_byte_xor(bytes_encrypted, key_byte)
-        self.assertEqual(bytes_decrypted.decode(), "Cooking MC's like a pound of bacon");
+        key_byte, _ = crack_single_byte_xor(bytes_encrypted)
+        string_decrypted = single_byte_xor(bytes_encrypted, key_byte).decode()
+        self.assertEqual(string_decrypted, "Cooking MC's like a pound of bacon")
+
+    def test_set1_4(self):
+        """Set 1 / Challenge 4 - Detect single-character XOR"""
+
+        # read file
+        path = os.path.join(os.path.dirname(__file__), 'test_set1_ch4.txt')
+        with open(path) as f:
+            lines = f.read().splitlines()
+
+        # find the line with highest score
+        index0 = -1
+        score0 = -1
+        for index, hex_encrypted in enumerate(lines):
+            bytes_encrypted = hex_to_bytes(hex_encrypted)
+            _, score = crack_single_byte_xor(bytes_encrypted)
+            if score > score0:
+                score0 = score
+                index0 = index
+        self.assertTrue(0 <= index0 < len(lines))
+
+        # decrypt and check line with highest score
+        bytes_encrypted = hex_to_bytes(lines[index0])
+        key_byte, _ = crack_single_byte_xor(bytes_encrypted)
+        string_decrypted = single_byte_xor(bytes_encrypted, key_byte).decode()
+        self.assertEqual(string_decrypted, "nOW\x00THAT\x00THE\x00PARTY\x00IS\x00JUMPING*")
 
 
 if __name__ == '__main__':
