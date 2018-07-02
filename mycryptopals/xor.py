@@ -1,4 +1,4 @@
-def xor(bytes1, bytes2):
+def fixed_xor(bytes1, bytes2):
     if len(bytes1) != len(bytes2):
         raise RuntimeError
     result = bytearray()
@@ -8,5 +8,8 @@ def xor(bytes1, bytes2):
 
 
 def single_byte_xor(byte_array, key_byte):
-    """XOR every byte in 'bytes' with the 'key_byte'"""
-    return xor(byte_array, [key_byte] * len(byte_array))
+    """XOR every byte in 'byte_array' with the 'key_byte'"""
+    result = bytearray()
+    for i in range(0, len(byte_array)):
+        result.append(byte_array[i] ^ key_byte)
+    return result

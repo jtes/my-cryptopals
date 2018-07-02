@@ -3,7 +3,7 @@ import unittest
 
 from mycryptopals.base64 import bytes_to_base64
 from mycryptopals.hex import bytes_to_hex, hex_to_bytes
-from mycryptopals.xor import xor, single_byte_xor
+from mycryptopals.xor import single_byte_xor, fixed_xor
 from mycryptopals.xor_decrypt import crack_single_byte_xor
 
 
@@ -19,7 +19,7 @@ class TestSet11(unittest.TestCase):
         """Set 1 / Challenge 2 - Fixed XOR"""
         hex1 = "1c0111001f010100061a024b53535009181c"
         hex2 = "686974207468652062756c6c277320657965"
-        result = bytes_to_hex(xor(hex_to_bytes(hex1), hex_to_bytes(hex2)))
+        result = bytes_to_hex(fixed_xor(hex_to_bytes(hex1), hex_to_bytes(hex2)))
         self.assertEqual(result, "746865206b696420646f6e277420706c6179")
 
     def test_set1_3(self):
