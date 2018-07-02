@@ -13,3 +13,11 @@ def single_byte_xor(byte_array, key_byte):
     for i in range(0, len(byte_array)):
         result.append(byte_array[i] ^ key_byte)
     return result
+
+
+def multi_byte_xor(byte_array, key_bytes):
+    """XOR the 'byte_array' with 'key_bytes'"""
+    result = bytearray()
+    for i in range(0, len(byte_array)):
+        result.append(byte_array[i] ^ key_bytes[i % len(key_bytes)])
+    return result

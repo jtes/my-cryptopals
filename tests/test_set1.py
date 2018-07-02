@@ -3,7 +3,7 @@ import unittest
 
 from mycryptopals.base64 import bytes_to_base64
 from mycryptopals.hex import bytes_to_hex, hex_to_bytes
-from mycryptopals.xor import single_byte_xor, fixed_xor
+from mycryptopals.xor import single_byte_xor, fixed_xor, multi_byte_xor
 from mycryptopals.xor_decrypt import crack_single_byte_xor
 
 
@@ -54,6 +54,13 @@ class TestSet11(unittest.TestCase):
         key_byte, _ = crack_single_byte_xor(bytes_encrypted)
         string_decrypted = single_byte_xor(bytes_encrypted, key_byte).decode()
         self.assertEqual(string_decrypted, "nOW\x00THAT\x00THE\x00PARTY\x00IS\x00JUMPING*")
+
+    def test_set1_5(self):
+        """Set 1 / Challenge 5 - Implement repeating-key XOR"""
+        line1 = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal"
+        line1_enc = multi_byte_xor(line1.encode(), "ICE".encode())
+        self.assertEqual(bytes_to_hex(line1_enc),
+                         "0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f")
 
 
 if __name__ == '__main__':
