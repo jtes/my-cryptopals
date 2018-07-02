@@ -1,7 +1,9 @@
 import os
 import unittest
 
-from mycryptopals.utils import *
+from mycryptopals.base64 import bytes_to_base64
+from mycryptopals.hex import bytes_to_hex, hex_to_bytes
+from mycryptopals.xor import xor, single_byte_xor
 from mycryptopals.xor_decrypt import crack_single_byte_xor
 
 
