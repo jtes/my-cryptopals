@@ -2,7 +2,7 @@ from mycryptopals.xor import single_byte_xor
 
 english_letter_freq = {'a': 116, 'b': 44, 'c': 52, 'd': 32, 'e': 28, 'f': 40, 'g': 16, 'h': 42, 'i': 73, 'j': 5, 'k': 5, 'l': 24, 'm': 38, 'n': 23, 'o': 76, 'p': 43, 'q': 2,
                        'r': 28, 's': 67, 't': 160, 'u': 12, 'v': 8, 'w': 55, 'x': 1, 'y': 8, 'z': 1}
-"""score fore frequency of letters in english text (from Wikipedia)"""
+"""score fore frequency of letters in english text (from Wikipedia, modified)"""
 
 
 def calculate_score(byte_array):

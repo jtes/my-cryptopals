@@ -4,7 +4,7 @@ import unittest
 from mycryptopals.base64 import bytes_to_base64
 from mycryptopals.hex import bytes_to_hex, hex_to_bytes
 from mycryptopals.xor import single_byte_xor, fixed_xor, multi_byte_xor
-from mycryptopals.xor_decrypt import crack_single_byte_xor
+from mycryptopals.xor_cracker import crack_single_byte_xor
 
 
 class TestSet11(unittest.TestCase):
@@ -39,14 +39,12 @@ class TestSet11(unittest.TestCase):
             lines = f.read().splitlines()
 
         # find the line with highest score
-        index0 = -1
-        score0 = -1
+        index0, score0 = -1, -1
         for index, hex_encrypted in enumerate(lines):
             bytes_encrypted = hex_to_bytes(hex_encrypted)
             _, score = crack_single_byte_xor(bytes_encrypted)
             if score > score0:
-                score0 = score
-                index0 = index
+                score0, index0 = score, index
         self.assertTrue(0 <= index0 < len(lines))
 
         # decrypt and check line with highest score
