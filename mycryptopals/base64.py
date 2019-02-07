@@ -32,3 +32,23 @@ def bytes_to_base64(byte_array):
             ret[-2] = '='
 
     return "".join(ret)
+
+
+def bytes_from_base64(base64_string):
+    """Convert base64-encoded string back to bytes array"""
+    ret = []
+
+    input_bytes = bytes(base64_string, "utf-8")
+    for i in range(0, len(input_bytes), 4):
+        bb = [__b64table.index(chr(x)) for x in input_bytes[i:i + 4] if chr(x) != "="]
+
+        b = (bb[0] << 2) | (bb[1] & 0b11110000) >> 4
+        ret.append(b)
+        if len(bb) > 2:
+            b = ((bb[1] & 0b00001111) << 4) | (bb[2] & 0b11111100) >> 2
+            ret.append(b)
+        if len(bb) > 3:
+            b = ((bb[2] & 0b00000011) << 6) | (bb[3] & 0b00111111)
+            ret.append(b)
+
+    return bytearray(ret)
