@@ -3,6 +3,7 @@
 import os
 import unittest
 
+from mycryptopals import base64, aes
 from mycryptopals.base64 import bytes_to_base64, bytes_from_base64
 from mycryptopals.hex import bytes_to_hex, hex_to_bytes
 from mycryptopals.xor import single_byte_xor, fixed_xor, multi_byte_xor
@@ -77,6 +78,16 @@ class TestSet1(unittest.TestCase):
         self.assertEqual(key, [84, 101, 114, 109, 105, 110, 97, 116, 111, 114, 32, 88, 58, 32, 66, 114, 105, 110, 103, 32, 116, 104, 101, 32, 110, 111, 105, 115, 101])
         self.assertTrue(string_decrypted.startswith("I'm back and I'm ringin' the bell"))
         self.assertTrue(string_decrypted.endswith("Play that funky music \n"))
+
+    def test_set1_7(self):
+        """Set 1 / Challenge 7 - AES in ECB mode"""
+        with open('test_set1_ch7_plain.txt') as f:
+            plain = f.read().encode()
+        with open('test_set1_ch7_enc.txt') as f:
+            encrypted = base64.bytes_from_base64(f.read().replace('\n', ''))
+        key = 'YELLOW SUBMARINE'
+        decrypted = aes.decrypt_ecb(key.encode(), encrypted)
+        self.assertEqual(decrypted, plain)
 
 
 if __name__ == '__main__':
